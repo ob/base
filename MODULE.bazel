@@ -1,0 +1,36 @@
+""" base module """
+
+module(
+    name = "base",
+    version = "1.0.0",
+)
+
+bazel_dep(name = "rules_jvm_external", version = "6.2")
+
+# Forward dependencies for visibility
+bazel_dep(name = "repo-a", version = "1.0.0")
+git_override(
+    module_name = "repo-a",
+    remote = "",
+    commit = "",
+)
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+maven.install(
+    name = "base_maven_deps",
+    artifacts = [
+        "junit:junit:4.13.2",
+        "org.hamcrest:hamcrest-core:1.3",
+    ],
+    repositories = [
+        "https://repo1.maven.org/maven2",
+    ],
+    strict_visibility = True,
+    # see https://github.com/bazel-contrib/rules_jvm_external/issues/916#issuecomment-2382706309
+    lock_file = "@//:base_maven_deps.json",
+)
+
+use_repo(
+    maven,
+    "base_maven_deps",
+)

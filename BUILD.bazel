@@ -1,0 +1,20 @@
+java_library(
+    name = "greeter",
+    srcs = glob(["src/main/java/**/*.java"]),
+    visibility = [
+        "@repo-a//src/main/java/com/company/salutations:__pkg__",
+    ],
+    deps = [],
+)
+
+java_test(
+    name = "greeter_test",
+    srcs = glob(["src/test/java/**/*.java"]),
+    test_class = "com.company.greeter.GreeterTest",
+    visibility = ["//visibility:private"],
+    deps = [
+        ":greeter",
+        "@base_maven_deps//:junit_junit",
+        "@base_maven_deps//:org_hamcrest_hamcrest_core",
+    ],
+)
