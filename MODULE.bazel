@@ -12,7 +12,7 @@ bazel_dep(name = "repo-a", version = "1.0.0")
 git_override(
     module_name = "repo-a",
     remote = "git@github.com:ob/repo-a.git",
-    commit = "main",
+    commit = "25dd7e62143b75278c1ff9797f28b0be882d193d",
 )
 
 maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
